@@ -4,6 +4,8 @@ ARG VCS_REF
 LABEL org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url="https://github.com/jerheij/docker-rainloop"
 
+HEALTHCHECK --interval=35s --timeout=4s CMD curl -k -f https://localhost || exit 1
+
 ARG GPG_FINGERPRINT="3B79 7ECE 694F 3B7B 70F3  11A4 ED7C 49D9 87DA 4591" 
 ARG DEBIAN_FRONTEND=noninteractive
 
