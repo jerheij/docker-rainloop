@@ -28,7 +28,8 @@ RUN apt-get install -y \
     php-pear \
     php-pdo \
     php-curl \
-    php-xml
+    php-xml \
+    curl
 
 RUN apt remove -y apache2*
 
