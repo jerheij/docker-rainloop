@@ -11,11 +11,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 ENV UID=991 GID=991 UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMORY_LIMIT=128M
 
-RUN apt-get update -y 
-
-RUN apt-get install wget unzip gnupg nginx supervisor -y
-
-RUN apt-get install -y \
+RUN apt-get update -y && \
+    apt-get install wget unzip gnupg nginx supervisor -y && \
+    apt-get install -y \
     php-cli \
     php-fpm \
     php-common \
@@ -29,11 +27,9 @@ RUN apt-get install -y \
     php-pdo \
     php-curl \
     php-xml \
-    curl
-
-RUN apt remove -y apache2*
-
-RUN apt-get clean all && \
+    curl && \
+    apt-get remove -y apache2* && \
+    apt-get clean all && \
     rm -rf /var/lib/apt/lists/*
 
 #RUN ln -s /usr/bin/php72 /usr/local/bin/php && \
