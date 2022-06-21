@@ -17,7 +17,7 @@ A mailserver running SMTP and POP3/IMAP to connect to.
 version: "2"  
 services:
   rainloop:
-    image: local/rainloop-ng:stable
+    jerheij/rainloop:stable
     container_name: rainloop
     restart: always
     ports:
@@ -36,7 +36,6 @@ services:
       - /opt/docker/rainloop/ssl/dhparam.pem:/etc/nginx/ssl/dhparam.pem:ro
     depends_on:
       - memcache
-      - pdns
 ```
 ### SSL
 The container has SSL enabled by default and expects the certificate chain and key to be available at the following locations inside the container:
