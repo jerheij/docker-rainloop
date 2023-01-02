@@ -33,22 +33,10 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 #RUN ln -s /usr/bin/php72 /usr/local/bin/php && \
-RUN cd /tmp && \
-    wget -q https://www.rainloop.net/repository/webmail/rainloop-community-latest.zip && \
-    wget -q https://www.rainloop.net/repository/webmail/rainloop-community-latest.zip.asc && \
-    wget -q https://www.rainloop.net/repository/RainLoop.asc && \
-    gpg --import RainLoop.asc && \
-    FINGERPRINT="$(LANG=C gpg --verify rainloop-community-latest.zip.asc rainloop-community-latest.zip 2>&1 \
-     | sed -n "s#Primary key fingerprint: \(.*\)#\1#p")" && \
-    if [ -z "${FINGERPRINT}" ]; then echo "ERROR: Invalid GPG signature!" && exit 1; fi && \
-    if [ "${FINGERPRINT}" != "${GPG_FINGERPRINT}" ]; then echo "ERROR: Wrong GPG fingerprint!" && exit 1; else echo "SUCCESS: GPG fingerprint correct!"; fi && \
-    mkdir /rainloop && unzip -q /tmp/rainloop-community-latest.zip -d /rainloop && \
-    find /rainloop -type d -exec chmod 755 {} \; && \
-    find /rainloop -type f -exec chmod 644 {} \; && \
-    rm -rf /tmp/* /root/.gnupg
 
 COPY rootfs /
-RUN chmod +x /usr/local/bin/run.sh
+RUN chmod +x /usr/local/bin/*.sh && \
+    /usr/local/bin/InstallRainloop.sh
 VOLUME /rainloop/data
 EXPOSE 80 443
 ENTRYPOINT ["/usr/local/bin/run.sh"]
